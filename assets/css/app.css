@@ -11,3 +11,86 @@ table.table-sm td,table.table-sm th{vertical-align:middle}
 @media print{.no-print,.navbar,.sidebar{display:none!important}main{padding:0!important}.card{border:0!important;box-shadow:none!important}}
 .receipt{width:80mm;margin:auto;font-family:monospace;font-size:12px}.receipt table{width:100%}.receipt hr{border-top:1px dashed #000}
 a.jump-link{color:inherit;text-decoration:none;border-bottom:1px dotted #0d6efd}a.jump-link:hover{color:#0d6efd;border-bottom-style:solid}
+/* Responsive Grid System */
+.pos-grid {
+    display: grid;
+    /* Creates columns that fill space but never shrink below 140px (ideal touch target) */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    max-width: 100%;
+}
+
+/* Product Tile */
+.product-tile {
+    background-color: #2a2a32;
+    border: 2px solid #3a3a45;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1 / 1; /* Keeps tiles perfectly square for a uniform grid */
+    cursor: pointer;
+    transition: transform 0.05s ease, background-color 0.1s ease;
+}
+
+/* Active/Tap States optimized for high-speed clicking */
+.product-tile:active {
+    transform: scale(0.96);
+    background-color: #3f3f4d;
+    border-color: #00adb5;
+}
+
+/* Image Container */
+.tile-image-wrapper {
+    flex: 1;
+    position: relative;
+    background-color: #141417;
+    overflow: hidden;
+}
+
+.tile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures images fill the space without distortion */
+}
+
+/* Fallback for products missing images */
+.tile-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: #3a3a45;
+    color: #a0a0ab;
+}
+
+/* Info Container (Always at the bottom) */
+.tile-info {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 52px; /* Fixed height guarantees text alignment across rows */
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.product-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #ffffff;
+    /* Truncates long names gracefully after 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #00adb5; /* High contrast color for quick verification */
+    margin-top: 2px;
+}

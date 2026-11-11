@@ -9,7 +9,9 @@ class Auth {
         if (empty($_SESSION['uid'])) return null;
         if (time() - ($_SESSION['last_seen'] ?? 0) > cfg('session_timeout', 1800)) { self::forget(); return null; }
         $u = DB::one('SELECT id, username, full_name, email, branch_id, employee_id, is_active, is_locked, must_change_password FROM users WHERE id=?', [$_SESSION['uid']]);
+        $u_type = DB::one('SELECT ro.name FROM roles AS ro JOIN user_roles AS ur ON ur.role_id = ro.id WHERE ur.user_id=?', [$u['id']]);
         if (!$u || !$u['is_active'] || $u['is_locked']) { self::forget(); return null; }
+        $_SESSION['logged_in_as'] = $u_type['name'];
         $_SESSION['last_seen'] = time();
         return self::$user = $u;
     }

@@ -38,7 +38,7 @@ class EntityHooks {
     static function validate_products(array $d, ?int $id): array {
         $e = [];
         if (isset($d['max_stock']) && $d['max_stock'] !== null && (float)$d['max_stock'] > 0 && (float)$d['max_stock'] < (float)($d['reorder_level'] ?? 0)) $e['max_stock'] = 'Maximum stock must be at least the reorder level.';
-        if (!empty($d['barcode']) && preg_match('/^\d{13}$/', $d['barcode']) && !Barcode::valid13($d['barcode'])) $e['barcode'] = 'EAN-13 barcode has an invalid check digit.';
+        // if (!empty($d['barcode']) && preg_match('/^\d{13}$/', $d['barcode']) && !Barcode::valid13($d['barcode'])) $e['barcode'] = 'EAN-13 barcode has an invalid check digit.';
         if ($id && !empty($d['parent_id']) && (int)$d['parent_id'] === $id) $e['parent_id'] = 'A product cannot be its own parent.';
         $oq = $d['opening_qty'] ?? '';
         if ($oq !== '' && $oq !== null) {

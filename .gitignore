@@ -1,0 +1,33 @@
+# Composer dependencies
+/vendor/
+composer.phar
+
+# Environment and configuration files
+.env
+.env.*
+!.env.example
+
+# Logs and cache
+*.log
+*.cache
+/cache/
+/tmp/
+
+# Testing and coverage reports
+.phpunit.result.cache
+/coverage/
+
+# Node / Frontend assets (if applicable)
+/uploads/
+/database/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating system files
+.DS_Store
+Thumbs.db

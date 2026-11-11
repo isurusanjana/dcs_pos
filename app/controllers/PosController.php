@@ -51,7 +51,8 @@ class PosController extends Controller {
         if (!$s || $s['status'] !== 'open') { flash('warning', $s ? 'Your session is suspended. Resume it first.' : 'Open a register session first.'); redirect('pos/session'); }
         $this->layout = 'layout/main';
         $holds = DB::all('SELECT id, label, created_at FROM held_carts WHERE user_id=? ORDER BY id DESC', [Auth::id()]);
-        $quick = DB::all('SELECT id, sku, name, sold_by, selling_price FROM products WHERE is_quick=1 AND is_active=1 AND is_archived=0 ORDER BY name LIMIT 24');
+        $quick = DB::all('SELECT id, sku, name, alias_name, sold_by, selling_price, image FROM products WHERE is_quick=1 AND is_active=1 AND is_archived=0 ORDER BY name');
+        // $quick = DB::all('SELECT id, sku, name, sold_by, selling_price FROM products WHERE is_quick=1 AND is_active=1 AND is_archived=0 ORDER BY name LIMIT 24');
         $this->render('pos/terminal', ['title' => 'POS Terminal', 's' => $s, 'holds' => $holds, 'quick' => $quick, 'cfg' => ['maxPct' => (float)setting('max_cashier_discount', 10), 'canDisc' => Auth::can('pos.discount.apply') || Auth::can('pos.discount.approve'), 'canPrice' => Auth::can('pos.sale.price_override'), 'canCredit' => Auth::can('pos.sale.credit'), 'isApprover' => Auth::can('pos.discount.approve')]]);
     }
     function action_search(): void {

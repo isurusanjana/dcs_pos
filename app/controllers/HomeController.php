@@ -15,7 +15,7 @@ class HomeController extends Controller {
     }
     /** Follow a link into another system (switches the active system if the user may use it). */
     function action_jump(): void {
-        $s = (string)input('s', ''); $to = (string)input('to', '');
+        $s = (string)input('s', ''); $to = (string)input('to', '');      
         if (!isset(self::systems()[$s]) || !Auth::canModule($s)) $this->abort(403, 'You do not have access to that system.');
         if (!preg_match('/^[a-z_]+\/[a-z_]+(&[A-Za-z0-9_.%+=\-]*)*$/', $to)) $this->abort(400, 'Invalid link.');
         $_SESSION['system'] = $s; header('Location: ' . base_url() . '/index.php?r=' . $to); exit;
@@ -25,7 +25,7 @@ class HomeController extends Controller {
         $s = (string)input('system', '');
         if (!isset(self::systems()[$s]) || !Auth::canModule($s)) $this->abort(403, 'You do not have access to that system.');
         $_SESSION['system'] = $s; audit('enter_system', 'system', $s);
-        if($s === 'pos') {
+        if($s === 'pos' && $_SESSION['logged_in_as'] != 'Accountant'){ 
             redirect('pos/terminal');
         }  else{
             redirect('dashboard/' . $s);

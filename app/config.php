@@ -9,4 +9,5 @@ return [
     'max_failed_logins' => 5,
     'lockout_minutes' => 15,
     'upload_max_bytes' => 2097152,
+    'server' => $_SERVER['HTTP_HOST'] ?? 'localhost'
 ];
